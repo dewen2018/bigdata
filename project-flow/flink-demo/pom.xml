@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--    <parent>-->
+    <!--        <groupId>com.dewen</groupId>-->
+    <!--        <artifactId>project-flow</artifactId>-->
+    <!--        <version>1.0.0</version>-->
+    <!--        <relativePath>../pom.xml</relativePath> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+    <!--    </parent>-->
+
+    <groupId>com.dewen</groupId>
+    <artifactId>flink-demo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <java.version>8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <!--        <scala.version>2.12.4</scala.version>-->
+        <!--        <scala.binary.version>2.12.4</scala.binary.version>-->
+        <!--1.12.4存在不兼容scala的问题-->
+        <!--1.12.1-->
+        <!--1.7.2-->
+        <!--1.11.3-->
+        <flink.version>1.7.2</flink.version>
+        <scala.binary.version>2.12.4</scala.binary.version>
+        <scala.version>2.12.4</scala.version>
+
+    </properties>
+
+    <dependencies>
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.flink</groupId>-->
+        <!--            <artifactId>flink-java</artifactId>-->
+        <!--            <version>${flink.java}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.flink</groupId>-->
+        <!--            <artifactId>flink-streaming-java_2.12</artifactId>-->
+        <!--            <version>${flink.java}</version>-->
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-scala_2.12</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-streaming-scala_2.12</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.flink</groupId>-->
+        <!--            <artifactId>flink-clients_2.12</artifactId>-->
+        <!--            <version>${flink.version}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.flink</groupId>-->
+        <!--            <artifactId>flink-connector-kafka_2.12</artifactId>-->
+        <!--            <version>${flink.java}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.bahir</groupId>-->
+        <!--            <artifactId>flink-connector-redis_2.11</artifactId>-->
+        <!--            <version>1.0</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>mysql</groupId>-->
+        <!--            <artifactId>mysql-connector-java</artifactId>-->
+        <!--            <version>5.1.44</version>-->
+        <!--        </dependency>-->
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <!-- 编译插件，将scala文件编译成class文件 -->
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>4.4.0</version>
+                <executions>
+                    <execution>
+                        <id>compile-scala</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile-scala</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- maven 打包插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <!--<executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>-->
+            </plugin>
+
+            <!--Could not resolve substitution to a value: ${akka.stream.materializer}-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <!--<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <mainClass>flink.KafkaDemo1</mainClass>
+                                </transformer>-->
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>reference.conf</resource>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--将重写的代码单独打为一个jar包，并且以 ! 或者其它字典顺序高的字符开头，放在lib目录下即可-->
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    &lt;!&ndash; 重写的class文件单独打成jar包放到lib 目录下，名称以!开头保证最先被加载 &ndash;&gt;
+                    <execution>
+                        <id>PaRewriteClass</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <finalName>!!rewriteClass-${project.version}</finalName>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <classifier>prc</classifier>
+                            <includes>
+                                &lt;!&ndash; 指定需要打包的类有哪些，这里是org目录下的所有类 &ndash;&gt;
+                                <include>**/org/**</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            &lt;!&ndash; 指定 Spring Boot 启动类，实际测试中必须 &ndash;&gt;
+                            &lt;!&ndash;<mainClass>cn.com.xxx.xxx.xxx</mainClass>&ndash;&gt;
+                            &lt;!&ndash; 将所有第三方 jar 添加到项目 jar 的 MANIFEST.MF 文件中，这样运行 jar 时依赖包才能被加载 &ndash;&gt;
+                            &lt;!&ndash; <addClasspath>true</addClasspath> &ndash;&gt;
+                            &lt;!&ndash; 指定复制第三方 jar 的目标目录为 target/lib/ &ndash;&gt;
+                            <classpathPrefix>./lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>-->
+        </plugins>
+    </build>
+</project>
