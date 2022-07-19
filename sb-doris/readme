@@ -1,0 +1,4 @@
+1.doris兼容mysql协议，直接使用mysql连接就可以了
+2.坑点，yml文件配置要注意，druid公共配置，使用之前配置方式，访问不了druid/index.html
+    dynamic和druid一个层级
+3.使用undertow容器
