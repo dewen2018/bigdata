@@ -1,0 +1,17 @@
+1.
+2.
+3.SendTo
+4.并发批量消费消息
+暂停和恢复 Listener Containers
+5.过滤监听器中的消息
+监听器异常处理
+6.Kafka Consumer 手动/自动提交 Offset
+    kafkaListenerContainerFactory 配置中设置 AckMode，它有七种模式分别为：
+        RECORD： 每处理完一条记录后提交。
+        BATCH(默认)： 每次poll一批数据后提交一次，频率取决于每次poll的调用频率。
+        TIME： 每次间隔ackTime的时间提交。
+        COUNT： 处理完poll的一批数据后并且距离上次提交处理的记录数超过了设置的ackCount就提交。
+        COUNT_TIME： TIME和COUNT中任意一条满足即提交。
+        MANUAL： 手动调用Acknowledgment.acknowledge()后，并且处理完poll的这批数据后提交。
+        MANUAL_IMMEDIATE： 手动调用Acknowledgment.acknowledge()后立即提交。
+        注意：如果设置 AckMode 模式为 MANUAL 或者 MANUAL_IMMEDIATE，则需要对监听消息的方法中，引入 Acknowledgment 对象参数，并调用 acknowledge() 方法进行手动提交
