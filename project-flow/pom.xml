@@ -20,10 +20,13 @@
 
 
 	<modules>
-		<!--<module>log-flume</module>-->
-<!--		<module>flink-demo</module>-->
+		<module>log-flume</module>
+		<module>flink-demo</module>
         <module>flink2</module>
-    </modules>
+<!--		<module>flink-student</module>-->
+		<module>flink-cdc</module>
+		<module>flink-kafka</module>
+	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

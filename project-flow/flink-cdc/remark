@@ -1,0 +1,7 @@
+flink-connector-mysql-cdc
+    https://repo1.maven.org/maven2/com/ververica/flink-connector-mysql-cdc/2.0.2/
+flink
+    https://dlcdn.apache.org/flink/flink-1.14.5/flink-1.14.5-bin-scala_2.12.tgz
+Flink Doris Connector
+    https://dist.apache.org/repos/dist/release/doris/flink-connector/1.1.0/apache-doris-flink-connector-1.14_2.12-1.1.0-src.tar.gz
+    http://doris.incubator.apache.org/zh-CN/downloads/downloads.html
