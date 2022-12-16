@@ -12,3 +12,6 @@ flink-kafka
     从kafka读取数据输出到控制台、文件、写kafka、mysql、Hbase
 
 kafka未完成测试
+
+flink-big-screen
+    mysql日志--kafka--redis

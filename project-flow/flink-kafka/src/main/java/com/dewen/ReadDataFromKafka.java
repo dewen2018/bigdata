@@ -26,7 +26,7 @@ public class ReadDataFromKafka {
 
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         Properties props = new Properties();
-        props.setProperty("bootstrap.servers", "node1:9092,node2:9092,node3:9092");
+        props.setProperty("bootstrap.servers", "master:9092,slave1:9092,slave2:9092");
         props.setProperty("group.id", "flink-group");
         /**
          * 第一个参数是 topic
@@ -65,7 +65,7 @@ public class ReadDataFromKafka {
         //----------------------------------------------------
         //sink 将结果存入 kafka topic 中,存入 kafka 中的是 String 类型，所有 endResult 需要做进一步的转换
         FlinkKafkaProducer<String> producer = new
-                FlinkKafkaProducer<>("node1:9092,node2:9092,node3:9092", "FlinkResult", new SimpleStringSchema());
+                FlinkKafkaProducer<>("master:9092,slave1:9092,slave2:9092", "FlinkResult", new SimpleStringSchema());
         //将 tuple2 格式数据转换成 String 格式
         endResult.map(new MapFunction<Tuple2<String, Integer>, String>() {
             @Override

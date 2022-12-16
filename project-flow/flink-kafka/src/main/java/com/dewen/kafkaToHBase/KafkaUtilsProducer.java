@@ -11,8 +11,9 @@ import java.util.Properties;
  */
 @Slf4j
 public class KafkaUtilsProducer {
-    public static final String broker_list = "10.252.92.4:9092";
-    public static final String topic = "zhisheng";  //kafka topic 需要和 flink 程序用同一个 topic
+    public static final String broker_list = "master:9092";
+    //kafka topic 需要和 flink 程序用同一个 topic
+    public static final String topic = "dewen";
 
     public static void writeToKafka() throws InterruptedException {
         Properties props = new Properties();

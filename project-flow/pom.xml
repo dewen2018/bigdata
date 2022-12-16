@@ -20,12 +20,13 @@
 
 
 	<modules>
-		<module>log-flume</module>
-		<module>flink-demo</module>
-        <module>flink2</module>
+<!--		<module>log-flume</module>-->
+<!--		<module>flink-demo</module>-->
+<!--        <module>flink2</module>-->
 <!--		<module>flink-student</module>-->
-		<module>flink-cdc</module>
-		<module>flink-kafka</module>
+<!--		<module>flink-cdc</module>-->
+<!--		<module>flink-kafka</module>-->
+		<module>flink-big-screen</module>
 	</modules>
 	<dependencies>
 		<dependency>

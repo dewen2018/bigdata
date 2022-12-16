@@ -23,9 +23,9 @@ public class KafkaHBaseStreamWriteMain {
     public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.addSource(new FlinkKafkaConsumer<>(
-                TOPIC,   //这个 kafka topic 需要和上面的工具类的 topic 一致
-                new SimpleStringSchema(),
-                getKafkaProps()))
+                        TOPIC,   //这个 kafka topic 需要和上面的工具类的 topic 一致
+                        new SimpleStringSchema(),
+                        getKafkaProps()))
                 .writeUsingOutputFormat(new HBaseOutputFormat());
 
         env.execute("Flink HBase connector sink");
@@ -35,8 +35,8 @@ public class KafkaHBaseStreamWriteMain {
     private static Properties getKafkaProps() {
         // 配置kafka
         Properties props = new Properties();
-        props.put("bootstrap.servers", "10.252.92.4:9092");
-        props.put("zookeeper.connect", "10.252.92.4:2181");
+        props.put("bootstrap.servers", "master:9092");
+        props.put("zookeeper.connect", "master:2181");
         props.put("group.id", "metric-group");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
@@ -53,7 +53,7 @@ public class KafkaHBaseStreamWriteMain {
         public void configure(Configuration parameters) {
             // 配置Hbase
             configuration = HBaseConfiguration.create();
-            configuration.set("hbase.zookeeper.quorum", "10.252.92.4:2181");
+            configuration.set("hbase.zookeeper.quorum", "master:2181");
             configuration.set("hbase.zookeeper.property.clientPort", "2081");
             configuration.set("hbase.rpc.timeout", "30000");
             configuration.set("hbase.client.operation.timeout", "30000");
